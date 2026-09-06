@@ -1,12 +1,13 @@
-<h1>Setting Up Mac OS X 10.4 Tiger For Development</h1>
+<h1><a href="http://tigerports.com">TigerPorts</a> -&gt; Getting Started With Tiger Development</h1>
 <p>This document will explain configuring the following:</p>
 <ul>
 <li>Building tigerports from source.</li>
 <li>Replacing Tiger SSH with modern OpenSSH.</li>
 <li>Installing/configuring git with modern OpenSSL for github.</li>
 </ul>
+<p>While this guide is written for TigerPorts, steps 2 and 3 also apply to <a href="https://macos-powerpc.org/">PowerPC Ports</a> and <a href="https://macports.org">MacPorts</a>.</p>
 <h2>Step 1: Install TigerPorts</h2>
-<p>Download the <a href="http://tigerports.com#downloads">TigerPorts tarball</a>. Extract it, then <code>cd</code> into the extracted directory. To build:</p>
+<p>Download the <a href="http://tigerports.com">TigerPorts tarball</a>. Extract it, then <code>cd</code> into the extracted directory. To build:</p>
 <p><code>sudo ./bootstrap; make; sudo make install</code></p>
 <p><code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code></p>
 <p><code>sudo port selfupdate</code></p>
@@ -35,8 +36,10 @@
 <p>Make sure you have completed step 1, and especially that you have done <code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code> for your terminal session so it doesn't use the built in mac os x versions of the software.</p>
 </li>
 </ul>
-<p>Install git:</p>
-<p><code>sudo port install git</code></p>
-<p>Run <a href="https://github.com/alex-free/github-ssh-enabler">gsshs</a>:</p>
+<p>Install OpenSSL and Git:</p>
+<p><code>sudo port install openssl git</code></p>
+<p>Load OpenSSL:</p>
+<p><code>sudo port load openssl</code></p>
+<p>Run <a href="https://github.com/alex-free/github-ssh-setup">gsshs</a>:</p>
 <p><code>./gsshs &lt;github account email&gt; &lt;github user name&gt;</code></p>
 <p>In the browser click create a new key, and paste it into the box.</p>

@@ -2,5 +2,5 @@
 
 cd "$(dirname "$0")"
 for f in $(find . -type f -name 'index.md'); do
-    cmark "$f" > "$(dirname "$f")/index.html"
+    cmark-gfm --extension table "$f" > "$(dirname "$f")/index.html"
 done
