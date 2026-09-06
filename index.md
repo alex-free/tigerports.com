@@ -2,7 +2,7 @@
 
 This is not just a fork of MacPorts. It is a recreation of the entire MacPorts infrastructure, tailored to our favorite OS. TigerPorts supports Intel and PowerPC Macs.
 
-* [Tiger orientated ports tree](https://github.com/alex-free/tigerports-ports) focused on software that works on Tiger. This is a managed snapshot of my fork of powerpc-ports tigerports branch (which tracks upstream powerpc-ports, and changes are submitted to them as well) merged with the MacPorts Ports tree, creating one unified ports tree for tiger.
+* [Tiger orientated ports tree](https://github.com/alex-free/tigerports-ports) focused on software that works on Tiger. This is a managed snapshot of my fork of powerpc-ports tigerports branch (which tracks upstream powerpc-ports, and changes are submitted to them as well when possible) merged with the MacPorts Ports tree, creating one unified ports tree for tiger.
 
 * [Tiger orientated base](https://github.com/alex-free/tigerports-base), configured in source to use tigerports.com. This tracks upstream macports-base as close as possible, includes tiger-specific fixes/functionally, and additional features supported by PPCPorts-base as well. In addition, TigerPorts-Base is TLSv1.2 capable with modern certs so that it can connect to modern distfile sites/mirrors.
 
@@ -63,34 +63,5 @@ TigerPorts requires Mac OS X 10.4.11 and Xcode v2.5. For your convenience I host
 
 ## Usage
 
-**Building from source is now different then official MacPorts due to integrating the bootstrap system:**
+It's just like MacPorts. Right now, there are only source releases of base that you need to build yourself. See the page [Getting Started With Tiger Development](getting-started-with-tiger-development) for build instructions. Also documented there is how to replace the ancient ssh built-in to tiger with a modern secure one from ports, as well as setting up/configuring git over ssh that works for push/pull with github.
 
-1) Download and extract the latest tarball release.
-
-2) `cd` into the extracted tarball release.
-
-3) `./bootstrap && make && sudo make install`.
-
-4) `export PATH=/opt/local/bin:/opt/local/sbin:$PATH`
-
-_Note:_ just like when installing official MacPorts from source, you'll need to either modify your `$PATH` or specify:
-
-`export PATH=/opt/local/bin:/opt/local/sbin:$PATH` 
-
-each terminal session to access your installed ports. This should be done automatically in a future update of the tigerports-base package.
-
-## Updating
-
-You can run:
-
-`sudo port selfupdate` to update base (if newer version is available) and the ports tree.
-
-To just update the ports tree:
-
-`sudo port sync`
-
-Note: some ports are not indexing due to PPCPorts upstream not being ready for the newer macports-base sources tigerports uses. This is a WIP and only a handful of ports are not indexing yet, so feel free to ignore this if you see some fail to parse.
-
-## TODO
-
-* Implement PKG installers.

@@ -1,0 +1,42 @@
+<h1>Setting Up Mac OS X 10.4 Tiger For Development</h1>
+<p>This document will explain configuring the following:</p>
+<ul>
+<li>Building tigerports from source.</li>
+<li>Replacing Tiger SSH with modern OpenSSH.</li>
+<li>Installing/configuring git with modern OpenSSL for github.</li>
+</ul>
+<h2>Step 1: Install TigerPorts</h2>
+<p>Download the <a href="http://tigerports.com#downloads">TigerPorts tarball</a>. Extract it, then <code>cd</code> into the extracted directory. To build:</p>
+<p><code>sudo ./bootstrap; make; sudo make install</code></p>
+<p><code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code></p>
+<p><code>sudo port selfupdate</code></p>
+<h2>Step 2: Replace Tiger SSH With MacPorts SSH</h2>
+<p>The built-in Tiger SSH does not support modern algorithms and will fail to connect to modern remote servers. It is also insecure and modern clients fail to ssh in by default. We can replace the built-in SSH with an up to date one from TigerPorts to resolve all of these issues.</p>
+<p>Make sure the built-in SSH of Tiger is disabled. Open <code>System Preferences.app</code>, go to <code>Sharing</code>, and uncheck <code>Remote Login</code>.</p>
+<p>Install OpenSSH, and activate the server:</p>
+<p><code>sudo port install openssh</code></p>
+<p><code>sudo port load openssh</code></p>
+<p>Backup your SSH server config (optional):</p>
+<p><code>sudo cp /opt/local/etc/ssh/sshd_config /opt/local/etc/ssh/sshd_config.orig</code></p>
+<p>By default, as to not conflict with the system SSH, MacPorts/TigerPorts SSH server runs on port 2222. Everytime you would ssh into your Tiger mac you would need to do ssh <!-- raw HTML omitted --> -p 2222. To edit the SSH sever config:</p>
+<p><code>sudo vi /opt/local/etc/ssh/sshd_config</code></p>
+<p>Change <code>Port 2222</code> to <code>Port 22</code>.</p>
+<p>While your here, enable PAM for account/password based auth to work. Change <code>#UsePam no</code> to <code>usePam yes</code>.</p>
+<p>Reload the server for changes to take effect:</p>
+<p><code>sudo port unload openssh</code></p>
+<p><code>sudo port load openssh</code></p>
+<h2>Step 3: Setup Git With SSH Access</h2>
+<p>We will be using my github-ssh-setup script for this next part. To make this as easy as possible:</p>
+<ul>
+<li>
+<p>Make sure PowerFox is set as your default browser and auto-logs in to your github account (optional, but allows github ssh setup to open the right page in a browser github supports to paste the ssh key it copies automatically to your clipboard).</p>
+</li>
+<li>
+<p>Make sure you have completed step 1, and especially that you have done <code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code> for your terminal session so it doesn't use the built in mac os x versions of the software.</p>
+</li>
+</ul>
+<p>Install git:</p>
+<p><code>sudo port install git</code></p>
+<p>Run <a href="https://github.com/alex-free/github-ssh-enabler">gsshs</a>:</p>
+<p><code>./gsshs &lt;github account email&gt; &lt;github user name&gt;</code></p>
+<p>In the browser click create a new key, and paste it into the box.</p>

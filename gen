@@ -1,7 +1,6 @@
 #!/bin/bash
 
 cd "$(dirname "$0")"
-pandoc index.md \
-  --standalone \
-  --template=template.html \
-  -o index.html
+for f in $(find . -type f -name 'index.md'); do
+    cmark "$f" > "$(dirname "$f")/index.html"
+done
