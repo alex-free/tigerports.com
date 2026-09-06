@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TigerPorts</title>
+</head>
+
+<body
+    background="aqua-blue.jpg"
+    text="#000000"
+    link="#FFFFFF"
+    vlink="#FFFFFF"
+    alink="#FFFFFF">
+
+<h1 id="tigerports">TigerPorts</h1>
+<p>This is not just a fork of MacPorts. It is a recreation of the entire
+MacPorts infrastructure, tailored to our favorite OS. TigerPorts
+supports Intel and PowerPC Macs.</p>
+<ul>
+<li><p><a href="https://github.com/alex-free/tigerports-ports">Tiger
+orientated ports tree</a> focused on software that works on Tiger. This
+is a managed snapshot of my fork of powerpc-ports tigerports branch
+(which tracks upstream powerpc-ports, and changes are submitted to them
+as well) merged with the MacPorts Ports tree, creating one unified ports
+tree for tiger.</p></li>
+<li><p><a href="https://github.com/alex-free/tigerports-base">Tiger
+orientated base</a>, configured in source to use tigerports.com. This
+tracks upstream macports-base as close as possible, includes
+tiger-specific fixes/functionally, and additional features supported by
+PPCPorts-base as well. In addition, TigerPorts-Base is TLSv1.2 capable
+with modern certs so that it can connect to modern distfile
+sites/mirrors.</p></li>
+<li><p><a
+href="https://github.com/alex-free/tigerports-infrastructure">Tiger
+orientated infrastructure</a>, allows hosting tigerports.com on a Debian
+VPS rather then a Mac like MacPorts has it. This includes numerous
+improvements to the sync scripts, adds binary package signing
+management, and includes a setup script to recreate my server.</p></li>
+<li><p><a href="#downloads">Tarball releases</a> to install TigerPorts
+from source on your Mac, same as official MacPorts (PKG installer is
+WIP).</p></li>
+<li><p>The <a href="http://tigerports.com/">tigerports.com</a> rsync
+server, which syncs with the <a
+href="https://github.com/alex-free/tigerports-ports">Tiger orientated
+ports tree</a> every 15 minutes, exactly like real MacPorts. Any pull
+requests merged there will be available in no later then a quarter hour
+to all TigerPorts users via <code>sudo port selfupdate</code>.</p></li>
+<li><p>The tigerports.com http server, which serves distfiles and
+compiled port binaries (<a
+href="http://tigerports.com/macports/packages">list of
+binaries</a>).</p></li>
+<li><p>Security is kept the same, just not managed by MacPorts. The
+ports tree, portindex, and binary packages served directly by
+tigerports.com are all signed.</p></li>
+</ul>
+<h2 id="forum-threads">Forum Threads</h2>
+<ul>
+<li><p><a
+href="https://forums.macrumors.com/threads/tigerports-com-entire-macports-infrastructure-revived-for-mac-os-x-10-4.2485572">MacRumors
+Early Intel Macs Forum Thread</a></p></li>
+<li><p><a
+href="https://forums.macrumors.com/threads/tigerports-com-entire-macports-infrastructure-revived-for-mac-os-x-10-4.2485567/">MacRumors
+PowerPC Macs Forum Thread</a></p></li>
+</ul>
+<h2 id="table-of-contents">Table Of Contents</h2>
+<ul>
+<li><p><a href="#downloads">Downloads</a></p></li>
+<li><p><a href="#usage">Usage</a></p></li>
+<li><p><a href="#todo">TODO</a></p></li>
+</ul>
+<h2 id="downloads">Downloads</h2>
+<h3 id="v2.12.04.002-8262026">v2.12.04.002 (8/26/2026)</h3>
+<p>Changes:</p>
+<ul>
+<li><p>Fixed bootstrap ppc detection.</p></li>
+<li><p>Improved bootstrap rebuild detection so that it will not rebuild
+only if curl successfully was built (and -f wasn’t given, and its not
+set to false for version bump via selfupdate).</p></li>
+<li><p>Bootstrap now extracts tarballs instead of copying extracted
+source directories. This not only makes diffing this against other
+macports-base projects easier, but fixes issues related to copying
+extracted sources after they have been uploaded to git.</p></li>
+<li><p><a
+href="http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.002.tar.bz2">TigerPorts-2.12.04.002.tar.bz2</a>
+<em>bzip2 release tarball (<a
+href="http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.002.tar.bz2.sig">verification
+signature</a>)</em></p></li>
+<li><p><a
+href="http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.002.tar.gz">TigerPorts-2.12.04.002.tar.gz</a>
+<em>gzip release tarball (<a
+href="http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.002.tar.gz.sig">verification
+signature</a>)</em></p></li>
+<li><p><a
+href="http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.002.chk.txt">TigerPorts-2.12.04.002.chk.txt</a>
+<em>cryptographic checksum manifest to verify the integrity of
+TigerPorts downloads</em></p></li>
+</ul>
+<p><a href="http://tigerports.com/macports/distfiles/MacPorts">Previous
+versions</a></p>
+<h2 id="requirements">Requirements</h2>
+<p>TigerPorts requires Mac OS X 10.4.11 and Xcode v2.5. For your
+convenience I host an archive for these Apple downloads here on
+tigerports.com for direct download on legacy Macs.</p>
+<ul>
+<li><p><a
+href="http://tigerports.com/apple/MacOSXUpdCombo10.4.11Intel.dmg">MacOSXUpdCombo10.4.11Intel.dmg</a>
+(MD5: cc6e64bfe6b00910cdcf60ba2028840d)</p></li>
+<li><p><a
+href="http://tigerports.com/apple/MacOSXUpdCombo10.4.11PPC.dmg">MacOSXUpdCombo10.4.11PPC.dmg</a>
+(MD5: 378b21fbd51471b0fa86129ead81541b)</p></li>
+<li><p><a
+href="http://tigerports.com/apple/xcode25_8m2558_developerdvd.dmg">xcode25_8m2558_developerdvd.dmg</a>
+(MD5: 3bd6c24d8fbbdf9007e15861d173764d)</p></li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p><strong>Building from source is now different then official MacPorts
+due to integrating the bootstrap system:</strong></p>
+<ol type="1">
+<li><p>Download and extract the latest tarball release.</p></li>
+<li><p><code>cd</code> into the extracted tarball release.</p></li>
+<li><p><code>./bootstrap &amp;&amp; make &amp;&amp; sudo make install</code>.</p></li>
+<li><p><code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code></p></li>
+</ol>
+<p><em>Note:</em> just like when installing official MacPorts from
+source, you’ll need to either modify your <code>$PATH</code> or
+specify:</p>
+<p><code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code></p>
+<p>each terminal session to access your installed ports. This should be
+done automatically in a future update of the tigerports-base
+package.</p>
+<h2 id="updating">Updating</h2>
+<p>You can run:</p>
+<p><code>sudo port selfupdate</code> to update base (if newer version is
+available) and the ports tree.</p>
+<p>To just update the ports tree:</p>
+<p><code>sudo port sync</code></p>
+<p>Note: some ports are not indexing due to PPCPorts upstream not being
+ready for the newer macports-base sources tigerports uses. This is a WIP
+and only a handful of ports are not indexing yet, so feel free to ignore
+this if you see some fail to parse.</p>
+<h2 id="todo">TODO</h2>
+<ul>
+<li>Implement PKG installers.</li>
+</ul>
+
+</body>
+</html>
