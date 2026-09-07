@@ -61,10 +61,6 @@ Install OpenSSL and Git:
 
 ```sudo port install openssl git```
 
-Load OpenSSL:
-
-```sudo port load openssl```
-
 Run [gsshs](https://github.com/alex-free/github-ssh-setup):
 
 ```./gsshs <github account email> <github user name>```
