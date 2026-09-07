@@ -18,6 +18,10 @@ Download the [TigerPorts tarball](http://tigerports.com). Extract it, then `cd` 
 
 ```sudo port selfupdate```
 
+Install apple-gcc42 (**this is not a typo, you must install it twice as the first is the bootstrap variant which is less capable then the full one, but the full version depends on the bootstrap variant being installed):
+
+```sudo port install apple-gcc42 && sudo port install apple-gcc42```
+
 ## Step 2: Replace Tiger SSH With MacPorts SSH
 
 The built-in Tiger SSH does not support modern algorithms and will fail to connect to modern remote servers. It is also insecure and modern clients fail to ssh in by default. We can replace the built-in SSH with an up to date one from TigerPorts to resolve all of these issues.

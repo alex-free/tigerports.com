@@ -11,6 +11,8 @@
 <p><code>sudo ./bootstrap; make; sudo make install</code></p>
 <p><code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code></p>
 <p><code>sudo port selfupdate</code></p>
+<p>Install apple-gcc42 (**this is not a typo, you must install it twice as the first is the bootstrap variant which is less capable then the full one, but the full version depends on the bootstrap variant being installed):</p>
+<p><code>sudo port install apple-gcc42 &amp;&amp; sudo port install apple-gcc42</code></p>
 <h2>Step 2: Replace Tiger SSH With MacPorts SSH</h2>
 <p>The built-in Tiger SSH does not support modern algorithms and will fail to connect to modern remote servers. It is also insecure and modern clients fail to ssh in by default. We can replace the built-in SSH with an up to date one from TigerPorts to resolve all of these issues.</p>
 <p>Make sure the built-in SSH of Tiger is disabled. Open <code>System Preferences.app</code>, go to <code>Sharing</code>, and uncheck <code>Remote Login</code>.</p>
