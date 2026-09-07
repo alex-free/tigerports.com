@@ -41,7 +41,7 @@ By default, as to not conflict with the system SSH, MacPorts/TigerPorts SSH serv
 
 Change `Port 2222` to `Port 22`.
 
-While your here, enable PAM for account/password based auth to work. Change `#UsePam no` to `usePam yes`.
+While your here, enable PAM for account/password based auth to work. Change `#UsePam no` to `UsePam yes`. Seriously, why is this disabled by default here??
 
 Reload the server for changes to take effect:
 

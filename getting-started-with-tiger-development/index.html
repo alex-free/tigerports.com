@@ -22,7 +22,7 @@
 <p>By default, as to not conflict with the system SSH, MacPorts/TigerPorts SSH server runs on port 2222. Everytime you would ssh into your Tiger mac you would need to do ssh <!-- raw HTML omitted --> -p 2222. To edit the SSH sever config:</p>
 <p><code>sudo vi /opt/local/etc/ssh/sshd_config</code></p>
 <p>Change <code>Port 2222</code> to <code>Port 22</code>.</p>
-<p>While your here, enable PAM for account/password based auth to work. Change <code>#UsePam no</code> to <code>usePam yes</code>.</p>
+<p>While your here, enable PAM for account/password based auth to work. Change <code>#UsePam no</code> to <code>UsePam yes</code>. Seriously, why is this disabled by default here??</p>
 <p>Reload the server for changes to take effect:</p>
 <p><code>sudo port unload openssh</code></p>
 <p><code>sudo port load openssh</code></p>
