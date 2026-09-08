@@ -1,0 +1,340 @@
+<h1><a href="http://tigerports.com">TigerPorts.com</a> -&gt; Upstream Status Report</h1>
+<p>This page reports the following:</p>
+<ul>
+<li>
+<p>Status of changes submitted to <a href="https://github.com/macos-powerpc/powerpc-ports">PowerPC Ports</a> (At any given time <a href="http://github.com/alex-free/tigerports-ports">TigerPorts Ports</a> may differ, but the goal is to NOT have too many differences or <em>any</em> if possible).</p>
+</li>
+<li>
+<p>Status of changes submitted to <a href="http://github.com/macports-ports/ports">MacPorts Ports</a> (if applicable to more then just tiger).</p>
+</li>
+<li>
+<p>Status of change submitted to the actual software.</p>
+</li>
+<li>
+<p>Until these are in some way 'complete' I will maintain them to keep the support in tiger going.</p>
+</li>
+</ul>
+<h2>Working Dependency Chains</h2>
+<p>These are software 'targets', the big software goals. They result in maintaining support for many dependency chains in order to get to the point where they can even be attempted to be built.</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>PowerPC Status</th>
+<th>Intel Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FFmpeg/FFplay</td>
+<td>almost (one last port needs to be made public but binaries are available for PPC at least).</td>
+<td>Not yet</td>
+</tr>
+<tr>
+<td>GCC16</td>
+<td>almost (one last fix to submit but binaries available)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Xorg</td>
+<td>todo</td>
+<td>todo</td>
+</tr>
+<tr>
+<td>Xquartz</td>
+<td>todo</td>
+<td>todo</td>
+</tr>
+<tr>
+<td>OpenVPN2</td>
+<td>almost (needs cleanup before being made public but privately works).</td>
+<td>almost (same deal)</td>
+</tr>
+<tr>
+<td>OpenSSL</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>OpenSSH</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Curl</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<h2>Ports</h2>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>PPC Ports</th>
+<th>MacPorts Ports</th>
+<th>Software</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>m4</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/182">merged</a></td>
+<td>N/A</td>
+<td>todo</td>
+<td>M4 has tiger fixes upstreamed only for power and not intel</td>
+</tr>
+<tr>
+<td>python27 +bootstrap</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/207">merged</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Complete.</td>
+</tr>
+<tr>
+<td>gcc16</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/193">merged</a></td>
+<td>N/A</td>
+<td>todo</td>
+<td>Needs expansion to everything pre-10.6 regardless of arch to fix rosetta and G5</td>
+</tr>
+<tr>
+<td>gawk</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/196">merged</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Complete.</td>
+</tr>
+<tr>
+<td>libarchive</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/206">merged</a></td>
+<td>N/A</td>
+<td>todo</td>
+<td>10.4 server has ACL but it doesn't support symlinks, 10.4 retail has no ACL implementation</td>
+</tr>
+<tr>
+<td>icu</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/200">merged</a></td>
+<td>??</td>
+<td>N/A</td>
+<td>Perhaps test leopard on macports official to see if it also applies.</td>
+</tr>
+<tr>
+<td>brotli</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/208">merged</a></td>
+<td>todo</td>
+<td>N/A</td>
+<td>Should test leopard on macports official, probably same issue.</td>
+</tr>
+<tr>
+<td>p5-xml-parser</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/209">merged</a></td>
+<td>todo</td>
+<td>N/A</td>
+<td>Can remove from overlay once submitted to macports</td>
+</tr>
+<tr>
+<td>python314</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/211">merged</a></td>
+<td>??</td>
+<td>todo??</td>
+<td>Find out a way to upstream to macports official if it applies, or the upstream should detect this. Or try newer linker?</td>
+</tr>
+<tr>
+<td>orc</td>
+<td>Intel fixes <a href="https://github.com/macos-powerpc/powerpc-ports/pull/213">merged</a>, PPC fixes not <a href="https://github.com/macos-powerpc/powerpc-ports/pull/264">yet</a></td>
+<td>todo</td>
+<td>todo</td>
+<td>Tiger lacks certain expected headers and intel expects a 2011 x86_64 CPU that understands xgetbv. Perhaps detect this better in a different way? Power might be able to default to altivec perhaps on tiger in-source build system? And macports could use the xgetbv patch to stop blacklisting clang?</td>
+</tr>
+<tr>
+<td>libjpeg-turbo</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/214">merged</a></td>
+<td>todo</td>
+<td>N/A</td>
+<td>This should apply to macports-ports for leopard/snow leopard</td>
+</tr>
+<tr>
+<td>brotli</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/208">merged</a></td>
+<td>todo</td>
+<td>N/A</td>
+<td>Should also apply to macports-ports for leopard/snow leopard</td>
+</tr>
+<tr>
+<td>libdeflate</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/215">merged</a></td>
+<td>??</td>
+<td>??</td>
+<td></td>
+</tr>
+<tr>
+<td>bash</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/216">merged</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>This can actually be fixed by either specifying pre-C23 with -std, or updating tiger headers to be C23 compliant. REDO.</td>
+</tr>
+<tr>
+<td>utl-linux</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/217">merged</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>This can probably be fixed like bash above</td>
+</tr>
+<tr>
+<td>libsndfile</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/219">merged</a></td>
+<td>todo</td>
+<td>todo</td>
+<td>This is actually an issue with newer C standards in general</td>
+</tr>
+<tr>
+<td>atk</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/220">merged</a></td>
+<td>N/A</td>
+<td>??</td>
+<td>This might be able to be fixed in upstream so that docs work</td>
+</tr>
+<tr>
+<td>pango</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/222">merged</a></td>
+<td>N/A</td>
+<td>??</td>
+<td>Might be another bash situation that can be redone</td>
+</tr>
+<tr>
+<td>libxkbcommon</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/224">merged</a></td>
+<td>N/A</td>
+<td>todo</td>
+<td>This should be upstreamed to the software</td>
+</tr>
+<tr>
+<td>py-gobject3</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/226">merged</a></td>
+<td>N/A</td>
+<td>??</td>
+<td>Might be another bash situation that can be redone</td>
+</tr>
+<tr>
+<td>libsdl2+pulseaudio</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/227">merged</a></td>
+<td>??</td>
+<td>??</td>
+<td>Certainly not everything can ever be upstreamed as it is, but perhaps pulseaudio could become 'allowed' for mac os somewhere?</td>
+</tr>
+<tr>
+<td>libdiscid</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/228">merged</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Complete.</td>
+</tr>
+<tr>
+<td>dbus</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/229">merged</a></td>
+<td>N/A</td>
+<td>todo</td>
+<td>Need to figure out what is going wrong with this build system linking the wrong paths (most likely an rpath-less issue).</td>
+</tr>
+<tr>
+<td>mesa</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/239">merged</a></td>
+<td>??</td>
+<td>todo</td>
+<td>The build system should be more accomadting to legacy intel cpus.</td>
+</tr>
+<tr>
+<td>uavs3d</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/243">merged</a></td>
+<td>??</td>
+<td>todo</td>
+<td>build system should be able to address legacy intel cpus.</td>
+</tr>
+<tr>
+<td>vvenc</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/244">merged</a></td>
+<td>todo</td>
+<td>todo</td>
+<td>This needs to go to upstream</td>
+</tr>
+<tr>
+<td>davs2</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/245">merged</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Complete</td>
+</tr>
+<tr>
+<td>zimg</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/246">merged</a></td>
+<td>??</td>
+<td>??</td>
+<td>Should support legacy intel</td>
+</tr>
+<tr>
+<td>gnutls</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/248">merged</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Same issue as bash probably</td>
+</tr>
+<tr>
+<td>tuntaposx</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/252">merged</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Complete. Maybe try to get a newer version but all newer versions target much newer Xcode, and apple-gcc42 isn't happy to build extensions for tiger on tiger yet</td>
+</tr>
+<tr>
+<td>ghostscript</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/253">not yet</a></td>
+<td>??</td>
+<td>??</td>
+<td>MacPorts might want this for old gcc.</td>
+</tr>
+<tr>
+<td>py-cairo+x11</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/266">N/A</a></td>
+<td>N/A</td>
+<td>This isn't a 'supported' variant in official macports (they force +x11+quartz), and perhaps it shouldn't be here either but we don't have a working xquartz yet. Not breaking other stuff to be pedantic so I allow it for now</td>
+<td></td>
+</tr>
+<tr>
+<td>libfmt12</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/269">not yet</a></td>
+<td>N/A</td>
+<td>todo</td>
+<td>This needs to be upstreamed as it's a bug in the software when built on tiger</td>
+</tr>
+<tr>
+<td>doxygen</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/270">not yet</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Perhaps get latest doxygen working?</td>
+</tr>
+<tr>
+<td>minizip-ng</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/271">not yet</a></td>
+<td>N/A</td>
+<td>todo</td>
+<td>Need to get this into upstream as they mandate O_NOFOLLOW</td>
+</tr>
+<tr>
+<td>expat</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/272">merged</a></td>
+<td>N/A</td>
+<td>TODO</td>
+<td>Perhaps their build system should not use rpaths when detecting 10.4</td>
+</tr>
+</tbody>
+</table>

@@ -16,20 +16,15 @@ This is not just a fork of MacPorts. It is a recreation of the entire MacPorts i
 
 * Security is kept the same, just not managed by MacPorts. The ports tree, portindex, and binary packages served directly by tigerports.com are all signed.
 
-## Forum Threads
+## Check it out:
+
+* [Getting Started With Tiger Development](getting-started-with-tiger-development) - usage instructions.
+
+* [Upstream Status Report](upstream-status-report) - status of maintained ports/change submissions, as well as working dependency chains.
 
 * [MacRumors Early Intel Macs Forum Thread](https://forums.macrumors.com/threads/tigerports-com-entire-macports-infrastructure-revived-for-mac-os-x-10-4.2485572)
 
 * [MacRumors PowerPC Macs Forum Thread](https://forums.macrumors.com/threads/tigerports-com-entire-macports-infrastructure-revived-for-mac-os-x-10-4.2485567/)
-
-
-## Table Of Contents
-
-* [Downloads](#downloads)
-
-* [Usage](#usage)
-
-* [TODO](#todo)
 
 ## Downloads
 
