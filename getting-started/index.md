@@ -1,4 +1,4 @@
-# [TigerPorts](http://tigerports.com) -> Getting Started With Tiger Development
+# [TigerPorts](http://tigerports.com) -> Getting Started
 
 This document will explain configuring the following:
 
@@ -6,7 +6,7 @@ This document will explain configuring the following:
 * Replacing Tiger SSH with modern OpenSSH.
 * Installing/configuring git with modern OpenSSL for github.
 
-While this guide is written for TigerPorts, steps 2 and 3 also apply to [PowerPC Ports](https://macos-powerpc.org/) and [MacPorts](https://macports.org).
+While this guide is written for TigerPorts, steps 2 and 3 also apply to [PowerPC Ports](https://macos-powerpc.org/) and [MacPorts](https://macports.org). If you want to contribute to the project, check out the [Contributions Quick Start Guide](http://tigerports.com/contributions-quick-start-guide).
 
 ## Step 1: Install TigerPorts
 

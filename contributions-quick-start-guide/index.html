@@ -1,0 +1,151 @@
+<h1><a href="http://tigerports.com">TigerPorts</a> -&gt; Contributions Quick Start Guide</h1>
+<p>Covered here includes:</p>
+<ul>
+<li>An understanding of the repos involved in this project.</li>
+<li>Common portfile additions/conditionals.</li>
+<li>Common Macros to use for source files involving adding tiger support.</li>
+<li>MacPorts basics.</li>
+<li>How to make proper patches.</li>
+</ul>
+<h2>Repos</h2>
+<p>This is the 'flow' of the upstreams so to say:</p>
+<ul>
+<li>
+<p><a href="https://github.com/alex-free/powerpc-ports">https://github.com/alex-free/powerpc-ports</a> (main branch) tracks <a href="https://github.com/macos-powerpc/powerpc-ports">https://github.com/macos-powerpc/powerpc-ports</a> (main branch) and is used as a branching point for submitting pull requests to PowerPC Ports.</p>
+</li>
+<li>
+<p><a href="https://github.com/alex-free/powerpc-ports/tree/tigerports">https://github.com/alex-free/powerpc-ports/tree/tigerports</a> (tigerports branch) is what all tiger fixes get submitted to. It has priorty over <a href="https://github.com/macports/macports-ports">https://github.com/macports/macports-ports</a>, which it is combined with frequently to create one complete ports tree tigerports.com server can fetch, at: <a href="https://github.com/alex-free/tigerports-ports">https://github.com/alex-free/tigerports-ports</a>.</p>
+</li>
+</ul>
+<p>Pull requests from end users may either be:</p>
+<ul>
+<li>
+<p>Based on the <a href="https://github.com/alex-free/powerpc-ports/tree/tigerports">https://github.com/alex-free/powerpc-ports/tree/tigerports</a> (tigerports branch) directly and submitted to said branch. The can be upstreamed to powerpc ports by myself if applicable from there.</p>
+</li>
+<li>
+<p>Based on the <a href="https://github.com/macos-powerpc/powerpc-ports">https://github.com/macos-powerpc/powerpc-ports</a> (main branch) and directly submitted to said branch. These will trickle down into the tigerports branch and therefore still end up in <a href="https://github.com/alex-free/tigerports-ports">https://github.com/alex-free/tigerports-ports</a>.  <strong>Please make sure that what your submitting specifically applies to powerpc ports if you do this. TigerPorts is a downstream of PowerPC Ports, but may have it's own differences at any given time.</strong></p>
+</li>
+</ul>
+<h2>Common Portfile Additions</h2>
+<p>If Intel:</p>
+<pre><code>if {${configure.build_arch} eq &quot;i386&quot;} {
+
+}
+</code></pre>
+<p>If Power:</p>
+<pre><code>if {${configure.build_arch} eq &quot;ppc&quot;} {
+
+}
+</code></pre>
+<p>If we need a newer compiler then these (next priority is gcc16 when both are blacklisted):</p>
+<pre><code>compiler.blacklist *gcc-4.2 *gcc-4.0
+</code></pre>
+<p>If you run into incompatible-pointer-types within the software, and or it requires C23 (default -std= value set by gcc16):</p>
+<pre><code>if {[string match macports-gcc-* ${configure.compiler}]} {
+    configure.cflags-append    -Wno-error=incompatible-pointer-types
+}
+</code></pre>
+<p>If you run into incompatible-pointer-types within the software caused by the 10.4u.sdk (can also be -std=gnu17, or anything that isn't c23 or gnu23):</p>
+<pre><code>if {[string match macports-gcc-* ${configure.compiler}]} {
+    configure.cflags-append    -std=c17
+}
+</code></pre>
+<p>If this is tiger specific:</p>
+<pre><code>platform darwin 8 {
+
+}
+</code></pre>
+<p>If this would technically apply for i.e. panther as well (like no @rpath support):</p>
+<pre><code>if {${os.platform} eq &quot;darwin&quot; &amp;&amp; ${os.major} &lt; 9} {
+
+}
+</code></pre>
+<p>If Xcode 2.5's ancient gmake fails you:</p>
+<pre><code>depends_build-append port:gmake
+build.cmd ${prefix}/bin/gmake
+</code></pre>
+<p>If we need legacy support in the Portfile:</p>
+<pre><code>PortGroup           legacysupport 1.1
+legacysupport.newest_darwin_requires_legacy 8
+</code></pre>
+<h2>Macros</h2>
+<p>For source files to detect a code path for newer then 10.4 (can easily be reversed as well):</p>
+<pre><code>#if defined(__APPLE__)
+#include &quot;AvailabilityMacros.h&quot;
+#if MAC_OS_X_VERSION_MIN_REQUIRED &gt; 1040
+
+#endif
+#endif
+</code></pre>
+<p>Only apply something tiger specific (should have included <code>AvailabilityMacros.h</code> previously though):</p>
+<pre><code>#if defined(__APPLE__) &amp;&amp; MAC_OS_X_VERSION_MIN_REQUIRED != 1040
+
+#endif
+</code></pre>
+<h2>MacPorts Basics</h2>
+<p>To test a port after it's been built, you need to uninstall it.</p>
+<p>If this is a 'minor' thing that doesn't affect linked/built code (i.e. header/include fix, config fix, etc.):</p>
+<pre><code>sudo port -d uninstall &lt;port name&gt;
+</code></pre>
+<pre><code>sudo port -d -s install &lt;port name&gt;
+</code></pre>
+<p>If this affects things built/link and that immedietly depend on it, you should do this cleanly and rebuild everything from source:</p>
+<pre><code>sudo port -d uninstall --follow-dependents &lt;port name&gt;
+</code></pre>
+<pre><code>sudo port -d -s install &lt;port name&gt;
+</code></pre>
+<h2>Making Patches</h2>
+<p>Note: these are variant specific if your doing variants.</p>
+<p>Clean the port.</p>
+<pre><code>sudo port clean &lt;port name&gt;
+</code></pre>
+<p>Extract the port.</p>
+<pre><code>sudo port extract &lt;port name&gt;
+</code></pre>
+<p>Change into the extracted port dir.</p>
+<pre><code>cd $(port work &lt;port name&gt;)
+</code></pre>
+<p>Find the extraction root dir that macports uses:</p>
+<pre><code>ls
+</code></pre>
+<pre><code>cd &lt;extraction root dir&gt;
+</code></pre>
+<p>Find the target file to patch and make a .orig:</p>
+<pre><code>cp &lt;relative filepath&gt;/&lt;source file to patch&gt; &lt;relative filepath&gt;/&lt;source file to patch&gt;.orig
+</code></pre>
+<p>Edit/patch the target file. Any text editor will do, and vim is available in tigerports (I recommend setting :set mouse=i while in vim interactive mode to make copy/paste work like default vi from mac os):</p>
+<pre><code>sudo vi &lt;relative filepath&gt;/&lt;source file to patch&gt;
+</code></pre>
+<p>Create the unified diff. Make sure it looks clean:</p>
+<pre><code>diff -u &lt;relative filepath&gt;/&lt;source file to patch&gt;.orig &lt;relative filepath&gt;/&lt;source file to patch&gt;
+</code></pre>
+<p>Then when it looks good, write it to somewhere that doesn't need sudo privs like <code>~/Desktop</code>:</p>
+<pre><code>diff -u &lt;relative filepath&gt;/&lt;source file to patch&gt;.orig &lt;relative filepath&gt;/&lt;source file to patch&gt; &gt; ~/Desktop/&lt;relative filepath all lowercase, any /'s for subdirs changed to an underscore&gt;_&lt;source file to patch all lowercase&gt;_tiger.diff
+</code></pre>
+<p>Move it to the port dir <code>files</code> directory:</p>
+<pre><code>sudo mkdir -p $(port dir &lt;portname&gt;)/files
+</code></pre>
+<pre><code>sudo cp -v ~/Desktop/&lt;relative filepath all lowercase&gt;_&lt;source file to patch all lowercase&gt;_tiger.diff $(port dir &lt;port name&gt;)/files
+</code></pre>
+<p>If you have lots of patches, perhaps combine them into one:</p>
+<pre><code>cd $(port dir &lt;port name&gt;)/files
+</code></pre>
+<pre><code>cat *.diff &gt; ~/Desktop/&lt;whatever the patches do collectively&gt;_tiger.diff
+</code></pre>
+<pre><code>sudo cp ~/Desktop/&lt;whatever the patches do collectively&gt;_tiger.diff $(port dir &lt;port name&gt;)/files
+</code></pre>
+<p>Add the patch(es) to the <code>Portfile</code>:</p>
+<pre><code>sudo vi $(port dir &lt;portname&gt;)/Portfile
+</code></pre>
+<p>If no other patches exist before this, you can:</p>
+<pre><code>patchfiles    &lt;your patch&gt;
+</code></pre>
+<p>However it might be simpler to always use:</p>
+<pre><code>patchfiles-append    &lt;your patch&gt;
+</code></pre>
+<p>For multiple patches (espically with longer names as we want it to be no more wider then 80 characters), you could do:</p>
+<pre><code>patchfiles-append \
+       &lt;patch 1&gt; \
+       &lt;patch 2&gt; \
+       &lt;patch 3&gt;
+</code></pre>

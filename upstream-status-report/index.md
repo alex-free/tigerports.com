@@ -1,4 +1,4 @@
-# [TigerPorts.com](http://tigerports.com) -> Upstream Status Report
+# [TigerPorts](http://tigerports.com) -> Upstream Status Report
 
 This page reports the following:
 
@@ -10,21 +10,27 @@ This page reports the following:
 
 * Until these are in some way 'complete' I will maintain them to keep the support in tiger going.
 
-## Working Dependency Chains
+* Note that this isn't a list of 'everything that works on tiger'. Much more works then just the software in this list. This is a list of everything that is either currently problematic with tiger or has been fixed to work on tiger and it's current status.
 
-These are software 'targets', the big software goals. They result in maintaining support for many dependency chains in order to get to the point where they can even be attempted to be built.
+* This list is also tiger/tiger ports specific, and does not reflect the status of these ports on 10.5, 10.6, or that of any other macports config.
 
-| Port | PowerPC Status | Intel Status |
-|------|----------------|--------------|
-| FFmpeg/FFplay | almost (one last port needs to be made public but binaries are available for PPC at least). | Not yet |
-| GCC16 | almost (one last fix to submit but binaries available) | Yes | 
-| Git | yes | yes |
-| Xorg | todo | todo |
-| Xquartz | todo | todo |
-| OpenVPN2 | almost (needs cleanup before being made public but privately works). | almost (same deal) |
-| OpenSSL | yes | yes |
-| OpenSSH | yes | yes |
-| Curl | yes | yes |
+## Dependency Chains
+
+These are the big software goals to make tiger compatible (and make binaries available for). They result in maintaining support for many dependencies if they don't work with tiger OTB (see the ports section below for ports needing active maintence).
+
+| Port | PowerPC Tiger Status | Intel Tiger Status | Notes |
+|------|----------------------|--------------------|-------|
+| curl | yes | yes | none |
+| ffmpeg | yes | WIP | Intel still has dependencies that need to be fixed before building can be attempted |
+| gcc16 | almost (one last fix to submit but binaries available) | yes | none |
+| git | yes | yes | none. |
+| libsdl | yes | ?? | none |
+| libsdl2 +opengl +pulseaudio | yes | yes | this is now the default when doing `sudo port install libsdl2` for tiger! |
+| openssh | yes | yes | none |
+| openssl | yes | yes | none |
+| openvpn2 | almost (needs cleanup before being made public but privately works). | almost (same deal) | Needs some cleanup before being made public (specifically dnsupdown2 script needs to point to newer bash in shabang, and perhaps become more intentionally tiger compatible) |
+| python314 | yes | yes | none |
+| xorg | WIP | WIP | We have a legacy implementation already setup by kencu, but we need to fix some dependencies first before it will build. |
 
 ## Ports
 
@@ -63,6 +69,6 @@ These are software 'targets', the big software goals. They result in maintaining
 | ghostscript | [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/253) | ?? | ?? | MacPorts might want this for old gcc. | 
 | py-cairo+x11 | [N/A](https://github.com/macos-powerpc/powerpc-ports/pull/266) | N/A | This isn't a 'supported' variant in official macports (they force +x11+quartz), and perhaps it shouldn't be here either but we don't have a working xquartz yet. Not breaking other stuff to be pedantic so I allow it for now |
 | libfmt12 | [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/269) | N/A | todo | This needs to be upstreamed as it's a bug in the software when built on tiger |
-| doxygen | [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/270) | N/A | N/A | Perhaps get latest doxygen working? |
+| doxygen | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/270) | N/A | N/A | Complete... Perhaps get latest doxygen working? |
 | minizip-ng| [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/271) | N/A | todo | Need to get this into upstream as they mandate O_NOFOLLOW |
 | expat | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/272) | N/A| TODO | Perhaps their build system should not use rpaths when detecting 10.4 |

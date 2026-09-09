@@ -1,4 +1,4 @@
-<h1><a href="http://tigerports.com">TigerPorts.com</a> -&gt; Upstream Status Report</h1>
+<h1><a href="http://tigerports.com">TigerPorts</a> -&gt; Upstream Status Report</h1>
 <p>This page reports the following:</p>
 <ul>
 <li>
@@ -13,62 +13,90 @@
 <li>
 <p>Until these are in some way 'complete' I will maintain them to keep the support in tiger going.</p>
 </li>
+<li>
+<p>Note that this isn't a list of 'everything that works on tiger'. Much more works then just the software in this list. This is a list of everything that is either currently problematic with tiger or has been fixed to work on tiger and it's current status.</p>
+</li>
+<li>
+<p>This list is also tiger/tiger ports specific, and does not reflect the status of these ports on 10.5, 10.6, or that of any other macports config.</p>
+</li>
 </ul>
-<h2>Working Dependency Chains</h2>
-<p>These are software 'targets', the big software goals. They result in maintaining support for many dependency chains in order to get to the point where they can even be attempted to be built.</p>
+<h2>Dependency Chains</h2>
+<p>These are the big software goals to make tiger compatible (and make binaries available for). They result in maintaining support for many dependencies if they don't work with tiger OTB (see the ports section below for ports needing active maintence).</p>
 <table>
 <thead>
 <tr>
 <th>Port</th>
-<th>PowerPC Status</th>
-<th>Intel Status</th>
+<th>PowerPC Tiger Status</th>
+<th>Intel Tiger Status</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>FFmpeg/FFplay</td>
-<td>almost (one last port needs to be made public but binaries are available for PPC at least).</td>
-<td>Not yet</td>
+<td>curl</td>
+<td>yes</td>
+<td>yes</td>
+<td>none</td>
 </tr>
 <tr>
-<td>GCC16</td>
+<td>ffmpeg</td>
+<td>yes</td>
+<td>WIP</td>
+<td>Intel still has dependencies that need to be fixed before building can be attempted</td>
+</tr>
+<tr>
+<td>gcc16</td>
 <td>almost (one last fix to submit but binaries available)</td>
-<td>Yes</td>
+<td>yes</td>
+<td>none</td>
 </tr>
 <tr>
-<td>Git</td>
+<td>git</td>
 <td>yes</td>
 <td>yes</td>
+<td>none.</td>
 </tr>
 <tr>
-<td>Xorg</td>
-<td>todo</td>
-<td>todo</td>
+<td>libsdl</td>
+<td>yes</td>
+<td>??</td>
+<td>none</td>
 </tr>
 <tr>
-<td>Xquartz</td>
-<td>todo</td>
-<td>todo</td>
+<td>libsdl2 +opengl +pulseaudio</td>
+<td>yes</td>
+<td>yes</td>
+<td>this is now the default when doing <code>sudo port install libsdl2</code> for tiger!</td>
 </tr>
 <tr>
-<td>OpenVPN2</td>
+<td>openssh</td>
+<td>yes</td>
+<td>yes</td>
+<td>none</td>
+</tr>
+<tr>
+<td>openssl</td>
+<td>yes</td>
+<td>yes</td>
+<td>none</td>
+</tr>
+<tr>
+<td>openvpn2</td>
 <td>almost (needs cleanup before being made public but privately works).</td>
 <td>almost (same deal)</td>
+<td>Needs some cleanup before being made public (specifically dnsupdown2 script needs to point to newer bash in shabang, and perhaps become more intentionally tiger compatible)</td>
 </tr>
 <tr>
-<td>OpenSSL</td>
+<td>python314</td>
 <td>yes</td>
 <td>yes</td>
+<td>none</td>
 </tr>
 <tr>
-<td>OpenSSH</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>Curl</td>
-<td>yes</td>
-<td>yes</td>
+<td>xorg</td>
+<td>WIP</td>
+<td>WIP</td>
+<td>We have a legacy implementation already setup by kencu, but we need to fix some dependencies first before it will build.</td>
 </tr>
 </tbody>
 </table>
@@ -317,10 +345,10 @@
 </tr>
 <tr>
 <td>doxygen</td>
-<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/270">not yet</a></td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/270">merged</a></td>
 <td>N/A</td>
 <td>N/A</td>
-<td>Perhaps get latest doxygen working?</td>
+<td>Complete... Perhaps get latest doxygen working?</td>
 </tr>
 <tr>
 <td>minizip-ng</td>

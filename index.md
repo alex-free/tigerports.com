@@ -18,7 +18,9 @@ This is not just a fork of MacPorts. It is a recreation of the entire MacPorts i
 
 ## Check it out:
 
-* [Getting Started With Tiger Development](getting-started-with-tiger-development) - usage instructions.
+* [Getting Started](getting-started) - usage instructions, and how to setup/modernize your mac running tiger.
+
+* [Contributions Quick Start Quide](contributions-quick-start-guide) - for contributers, how to fix/work with tigerports and get your changes/fixes merged.
 
 * [Upstream Status Report](upstream-status-report) - status of maintained ports/change submissions, as well as working dependency chains.
 
