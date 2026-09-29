@@ -6,21 +6,29 @@ This document will explain configuring the following:
 * Replacing Tiger SSH with modern OpenSSH.
 * Installing/configuring git with modern OpenSSL for github.
 
-While this guide is written for TigerPorts, steps 2 and 3 also apply to [PowerPC Ports](https://macos-powerpc.org/) and [MacPorts](https://macports.org). If you want to contribute to the project, check out the [Contributions Quick Start Guide](http://tigerports.com/contributions-quick-start-guide).
+While this guide is written for TigerPorts, though after step 1 it generally also applies to [PowerPC Ports](https://macos-powerpc.org/) and [MacPorts](https://macports.org). If you want to contribute to the project, check out the [Contributions Quick Start Guide](http://tigerports.com/contributions-quick-start-guide).
 
 ## Step 1: Install TigerPorts
 
 Download the [TigerPorts tarball](http://tigerports.com). Extract it, then `cd` into the extracted directory. To build:
 
-```sudo ./bootstrap; make; sudo make install```
+```./bootstrap_configure.sh && make && sudo make install```
 
-```export PATH=/opt/local/bin:/opt/local/sbin:$PATH```
+You probably want to put update your shell to include macports envars and $PATH, to do so:
+
+```./upath.sh```
+
+Then sync the ports tree:
 
 ```sudo port selfupdate```
 
 Install apple-gcc42 (**this is not a typo, you must install it twice as the first is the bootstrap variant which is less capable then the full one, but the full version depends on the bootstrap variant being installed):
 
 ```sudo port install apple-gcc42 && sudo port install apple-gcc42```
+
+Optional For Dual G5 Owners:
+
+If you have a dual G5, I recommend explicitly setting `buildmakejobs` to `1` in `/opt/local/etc/macports/macports.conf`. It seems on PowerPC specifically with Tiger, multiple make jobs are much less stable and result in random failed builds for ports due to race conditons related to threading managemnt, not directly related to not enough RAM being available. This does not apply to Intel, my Mac Pro 1,1 with 2 dual core xeons (so 4 buildmakejobs by default is configured) can do even GCC16 builds just fine.
 
 ## Step 2: Replace Tiger SSH With MacPorts SSH
 
@@ -71,6 +79,10 @@ Run [gsshs](https://github.com/alex-free/github-ssh-setup):
 
 In the browser click create a new key, and paste it into the box.
 
+## Step 4: Setup VIM
 
+If you install vim, you need to setup a basic configuration for it to work properly: 
 
- 
+```echo "set nocompatible" >> ~/.vimrc```
+
+```echo "set backspace=indent,eol,start" >> ~/.vimrc```

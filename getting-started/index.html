@@ -5,14 +5,18 @@
 <li>Replacing Tiger SSH with modern OpenSSH.</li>
 <li>Installing/configuring git with modern OpenSSL for github.</li>
 </ul>
-<p>While this guide is written for TigerPorts, steps 2 and 3 also apply to <a href="https://macos-powerpc.org/">PowerPC Ports</a> and <a href="https://macports.org">MacPorts</a>. If you want to contribute to the project, check out the <a href="http://tigerports.com/contributions-quick-start-guide">Contributions Quick Start Guide</a>.</p>
+<p>While this guide is written for TigerPorts, though after step 1 it generally also applies to <a href="https://macos-powerpc.org/">PowerPC Ports</a> and <a href="https://macports.org">MacPorts</a>. If you want to contribute to the project, check out the <a href="http://tigerports.com/contributions-quick-start-guide">Contributions Quick Start Guide</a>.</p>
 <h2>Step 1: Install TigerPorts</h2>
 <p>Download the <a href="http://tigerports.com">TigerPorts tarball</a>. Extract it, then <code>cd</code> into the extracted directory. To build:</p>
-<p><code>sudo ./bootstrap; make; sudo make install</code></p>
-<p><code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code></p>
+<p><code>./bootstrap_configure.sh &amp;&amp; make &amp;&amp; sudo make install</code></p>
+<p>You probably want to put update your shell to include macports envars and $PATH, to do so:</p>
+<p><code>./upath.sh</code></p>
+<p>Then sync the ports tree:</p>
 <p><code>sudo port selfupdate</code></p>
 <p>Install apple-gcc42 (**this is not a typo, you must install it twice as the first is the bootstrap variant which is less capable then the full one, but the full version depends on the bootstrap variant being installed):</p>
 <p><code>sudo port install apple-gcc42 &amp;&amp; sudo port install apple-gcc42</code></p>
+<p>Optional For Dual G5 Owners:</p>
+<p>If you have a dual G5, I recommend explicitly setting <code>buildmakejobs</code> to <code>1</code> in <code>/opt/local/etc/macports/macports.conf</code>. It seems on PowerPC specifically with Tiger, multiple make jobs are much less stable and result in random failed builds for ports due to race conditons related to threading managemnt, not directly related to not enough RAM being available. This does not apply to Intel, my Mac Pro 1,1 with 2 dual core xeons (so 4 buildmakejobs by default is configured) can do even GCC16 builds just fine.</p>
 <h2>Step 2: Replace Tiger SSH With MacPorts SSH</h2>
 <p>The built-in Tiger SSH does not support modern algorithms and will fail to connect to modern remote servers. It is also insecure and modern clients fail to ssh in by default. We can replace the built-in SSH with an up to date one from TigerPorts to resolve all of these issues.</p>
 <p>Make sure the built-in SSH of Tiger is disabled. Open <code>System Preferences.app</code>, go to <code>Sharing</code>, and uncheck <code>Remote Login</code>.</p>
@@ -43,3 +47,7 @@
 <p>Run <a href="https://github.com/alex-free/github-ssh-setup">gsshs</a>:</p>
 <p><code>./gsshs &lt;github account email&gt; &lt;github user name&gt;</code></p>
 <p>In the browser click create a new key, and paste it into the box.</p>
+<h2>Step 4: Setup VIM</h2>
+<p>If you install vim, you need to setup a basic configuration for it to work properly:</p>
+<p><code>echo &quot;set nocompatible&quot; &gt;&gt; ~/.vimrc</code></p>
+<p><code>echo &quot;set backspace=indent,eol,start&quot; &gt;&gt; ~/.vimrc</code></p>

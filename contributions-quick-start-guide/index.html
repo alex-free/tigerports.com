@@ -26,14 +26,69 @@
 <p>Based on the <a href="https://github.com/macos-powerpc/powerpc-ports">https://github.com/macos-powerpc/powerpc-ports</a> (main branch) and directly submitted to said branch. These will trickle down into the tigerports branch and therefore still end up in <a href="https://github.com/alex-free/tigerports-ports">https://github.com/alex-free/tigerports-ports</a>.  <strong>Please make sure that what your submitting specifically applies to powerpc ports if you do this. TigerPorts is a downstream of PowerPC Ports, but may have it's own differences at any given time.</strong></p>
 </li>
 </ul>
+<h2>Merging</h2>
+<p>This is more so for me when combining PowerPC Ports upstream:</p>
+<pre><code>git remote add upstream https://github.com/macos-powerpc/powerpc-ports.git
+</code></pre>
+<pre><code>git fetch upstream
+</code></pre>
+<pre><code>git merge upstream/main
+</code></pre>
+<p>To resolve all conflicts with upstream winning:</p>
+<pre><code>git checkout --theirs .
+</code></pre>
+<pre><code>git add .
+</code></pre>
+<pre><code>git commit -m &quot;merge with upstream&quot;
+</code></pre>
+<pre><code>git push origin tigerports
+</code></pre>
+<p>Specifically for one file:</p>
+<pre><code>git checkout --theirs path/to/conflicted-file
+</code></pre>
+<pre><code>git add path/to/conflicted-file
+</code></pre>
+<pre><code>git commit
+</code></pre>
+<h2>Notes About Tiger Arches</h2>
+<ul>
+<li>
+<p>You can build CLI ports targeting any of the 4 arches on Tiger (retail or server they both support all of them): i386, x86_64, ppc, and ppc64. However, Tiger does not contain any framework support for any 64 bit arch. CLI ports can be built targeting 64 bit (change your build_arch), but they can't link any Apple frameworks in Tiger. Leopard and above is where frameworks have 64 bit slices that can be linked too. Note that Snow Leopard PPC does NOT have ppc64.</p>
+</li>
+<li>
+<p>ONLY i386/ppc is really tested at the moment. Ideally, if this is to be focused on, some ports can 'drop' from x86_64 to i386 and the like but this is not currently something implemented anywhere.</p>
+</li>
+<li>
+<p>Rosetta can build some ports (like libgcc16/gcc16) but fails on others (apple-gcc-42). One way to work around this is to use ppc built binaries to get to where you can build libgcc/gcc16 on Rosetta. Keep in mind with Rosetta you may need to lower makebuildjobs (I have my 2xdual core xeons with 4 cores set to 2 makebuildjobs) and that it will probably be slower then i.e. a G5.</p>
+</li>
+<li>
+<p>You must uninstall <strong>every</strong> installed port if your changing a current MacPorts install <code>build_arch</code>. So if you changing build_arch from say i386 to ppc, you need to <code>sudo port uninstall installed</code> before installing anything or it will try to force universal builds that are broken and unsupported by ppcports and tigerports.</p>
+</li>
+</ul>
 <h2>Common Portfile Additions</h2>
-<p>If Intel:</p>
+<p>Intel Tiger target is SSE3 maximum. If we are disabling i.e. SSE4 and AVX/AVX2/AVX512, gate it at Snow Leopard (as these technologies are only introduced in 2011 Intel CPUs):</p>
+<pre><code>if {${os.platform} eq &quot;darwin&quot; &amp;&amp; ${os.major} &lt; 11 &amp;&amp; \
+${configure.build_arch} in [list i386 x86_64]} {
+
+}
+</code></pre>
+<p>i386:</p>
 <pre><code>if {${configure.build_arch} eq &quot;i386&quot;} {
 
 }
 </code></pre>
-<p>If Power:</p>
+<p>x86_64/i386</p>
+<pre><code>if {${configure.build_arch} in [list i386 x86_64]} {
+
+}
+</code></pre>
+<p>PPC:</p>
 <pre><code>if {${configure.build_arch} eq &quot;ppc&quot;} {
+
+}
+</code></pre>
+<p>PPC/PPC64:</p>
+<pre><code>if {${configure.build_arch} in [list ppc ppc64]} {
 
 }
 </code></pre>
@@ -60,28 +115,47 @@
 
 }
 </code></pre>
-<p>If Xcode 2.5's ancient gmake fails you:</p>
-<pre><code>depends_build-append port:gmake
-build.cmd ${prefix}/bin/gmake
-</code></pre>
 <p>If we need legacy support in the Portfile:</p>
 <pre><code>PortGroup           legacysupport 1.1
 legacysupport.newest_darwin_requires_legacy 8
 </code></pre>
 <h2>Macros</h2>
-<p>For source files to detect a code path for newer then 10.4 (can easily be reversed as well):</p>
+<p>For source files to detect a code path for newer then 10.4:</p>
 <pre><code>#if defined(__APPLE__)
-#include &quot;AvailabilityMacros.h&quot;
+#include &lt;AvailabilityMacros.h&gt;
 #if MAC_OS_X_VERSION_MIN_REQUIRED &gt; 1040
 
 #endif
 #endif
 </code></pre>
-<p>Only apply something tiger specific (should have included <code>AvailabilityMacros.h</code> previously though):</p>
-<pre><code>#if defined(__APPLE__) &amp;&amp; MAC_OS_X_VERSION_MIN_REQUIRED != 1040
+<p>For source files to detect a code path for older then 10.5:</p>
+<pre><code>#if defined(__APPLE__)
+#include &lt;AvailabilityMacros.h&gt;
+#if MAC_OS_X_VERSION_MIN_REQUIRED &lt; 1050
 
 #endif
+#endif
 </code></pre>
+<h2>Handling XGETBV (Intel Optimization Detection)</h2>
+<p><strong>Many</strong> developers call xgetbv if gcc is sufficently new enough to find out what optimizations (like AVX) are available. The issue is, most don't <em>detect</em> if the call they use for <em>detection itself</em> is available. This causes issues on targeted intel CPUs (Core Solo/Core Duo is the minimum, but this affects Xeons, and others too).</p>
+<p>So before xgetbv is called:</p>
+<pre><code>#include &lt;cpuid.h&gt;
+
+// https://www.intel.com/content/dam/doc/manual/64-ia-32-architectures-optimization-manual.pdf
+unsigned eax, ebx, ecx, edx;
+// Get basic capability information. Only care about ecx bit 27 (OSXSAVE),
+// but need all 4 registers for call.
+ 
+ __get_cpuid(1, &amp;eax, &amp;ebx, &amp;ecx, &amp;edx);
+
+if (ecx &amp; (1 &lt;&lt; 27))
+{
+   printf(&quot;XGETBV DETECTED\n&quot;);
+} else {
+    printf(&quot;XGETBV NOT AVAILABLE\n&quot;);
+}
+</code></pre>
+<p>This depends on cpuid.h, which requires GCC 4.3 from what I can tell. Most software is gaurding xgetbv to GCC 4.9 so this isn't an issue, but if for some reason GCC 4.2 needed to be supported this could be rewritten without cpuid.h using 32 bit and 64 bit specific inline asm.</p>
 <h2>MacPorts Basics</h2>
 <p>To test a port after it's been built, you need to uninstall it.</p>
 <p>If this is a 'minor' thing that doesn't affect linked/built code (i.e. header/include fix, config fix, etc.):</p>
@@ -93,6 +167,20 @@ legacysupport.newest_darwin_requires_legacy 8
 <pre><code>sudo port -d uninstall --follow-dependents &lt;port name&gt;
 </code></pre>
 <pre><code>sudo port -d -s install &lt;port name&gt;
+</code></pre>
+<p>Get CMake build options:</p>
+<pre><code>sudo port -d extract &lt;portname&gt;
+</code></pre>
+<pre><code>cd $(port work &lt;port name&gt;)
+</code></pre>
+<pre><code>cmake -S . -B build -LAH
+</code></pre>
+<p>Get automake options:</p>
+<pre><code>sudo port -d extract &lt;portname&gt;
+</code></pre>
+<pre><code>cd $(port work &lt;port name&gt;/&lt;port extract root dir&gt;)
+</code></pre>
+<pre><code>./configure --help
 </code></pre>
 <h2>Making Patches</h2>
 <p>Note: these are variant specific if your doing variants.</p>

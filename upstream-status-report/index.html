@@ -1,8 +1,9 @@
 <h1><a href="http://tigerports.com">TigerPorts</a> -&gt; Upstream Status Report</h1>
+<h2>LAST UPDATED 9/17/2026</h2>
 <p>This page reports the following:</p>
 <ul>
 <li>
-<p>Status of changes submitted to <a href="https://github.com/macos-powerpc/powerpc-ports">PowerPC Ports</a> (At any given time <a href="http://github.com/alex-free/tigerports-ports">TigerPorts Ports</a> may differ, but the goal is to NOT have too many differences or <em>any</em> if possible).</p>
+<p>Status of changes submitted to <a href="https://github.com/macos-powerpc/powerpc-ports">PowerPC Ports</a> (At any given time <a href="http://github.com/alex-free/tigerports-ports">TigerPorts Ports</a> may differ, but the goal is to NOT have too many <a href="https://github.com/macos-powerpc/powerpc-ports/compare/main...alex-free:powerpc-ports:tigerports">differences</a> or <em>any</em> if possible).</p>
 </li>
 <li>
 <p>Status of changes submitted to <a href="http://github.com/macports-ports/ports">MacPorts Ports</a> (if applicable to more then just tiger).</p>
@@ -33,6 +34,18 @@
 </thead>
 <tbody>
 <tr>
+<td>bash</td>
+<td>yes</td>
+<td>yes</td>
+<td>none.</td>
+</tr>
+<tr>
+<td>clang3.4</td>
+<td>??</td>
+<td>yes</td>
+<td>none.</td>
+</tr>
+<tr>
 <td>curl</td>
 <td>yes</td>
 <td>yes</td>
@@ -41,12 +54,12 @@
 <tr>
 <td>ffmpeg</td>
 <td>yes</td>
-<td>WIP</td>
-<td>Intel still has dependencies that need to be fixed before building can be attempted</td>
+<td>yes</td>
+<td>none</td>
 </tr>
 <tr>
 <td>gcc16</td>
-<td>almost (one last fix to submit but binaries available)</td>
+<td>yes</td>
 <td>yes</td>
 <td>none</td>
 </tr>
@@ -59,14 +72,20 @@
 <tr>
 <td>libsdl</td>
 <td>yes</td>
-<td>??</td>
+<td>yes</td>
 <td>none</td>
 </tr>
 <tr>
-<td>libsdl2 +opengl +pulseaudio</td>
+<td>libsdl2</td>
 <td>yes</td>
 <td>yes</td>
-<td>this is now the default when doing <code>sudo port install libsdl2</code> for tiger!</td>
+<td>this uses pulseaudio backend since 10.4 does not have the native mac os apis needed since SDL 2.0.3.</td>
+</tr>
+<tr>
+<td>mplayer</td>
+<td>yes</td>
+<td>WIP</td>
+<td>all deps working, mplayer code itself has issues when building on intel (perhaps some powerpc defines are not actually powerpc-specific, but rather older osx specific here).</td>
 </tr>
 <tr>
 <td>openssh</td>
@@ -82,9 +101,21 @@
 </tr>
 <tr>
 <td>openvpn2</td>
-<td>almost (needs cleanup before being made public but privately works).</td>
-<td>almost (same deal)</td>
-<td>Needs some cleanup before being made public (specifically dnsupdown2 script needs to point to newer bash in shabang, and perhaps become more intentionally tiger compatible)</td>
+<td>yes</td>
+<td>yes</td>
+<td><a href="https://forums.macrumors.com/threads/guide-how-to-vpn-on-early-intel-10-4-and-newer.2488211/?post=34789475#post-34789475">check this out</a></td>
+</tr>
+<tr>
+<td>pulseaudio</td>
+<td>yes</td>
+<td>yes</td>
+<td>none</td>
+</tr>
+<tr>
+<td>aria2</td>
+<td>yes</td>
+<td>yes</td>
+<td>none</td>
 </tr>
 <tr>
 <td>python314</td>
@@ -94,9 +125,15 @@
 </tr>
 <tr>
 <td>xorg</td>
+<td>yes</td>
+<td>yes</td>
+<td>This is xorg-server-1.18 from late 2015. All newer versions require spawn.h, which tiger doesn't have. To do any newer version, one would need their own implementation spawn.h or to restore the code path used in spawn.h-less systems.</td>
+</tr>
+<tr>
+<td>yt-dlp</td>
 <td>WIP</td>
 <td>WIP</td>
-<td>We have a legacy implementation already setup by kencu, but we need to fix some dependencies first before it will build.</td>
+<td>Atomic Parsley dep is broken, WIP</td>
 </tr>
 </tbody>
 </table>
@@ -124,14 +161,14 @@
 <td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/207">merged</a></td>
 <td>N/A</td>
 <td>N/A</td>
-<td>Complete.</td>
+<td>Complete, was needed for clang3.4.</td>
 </tr>
 <tr>
 <td>gcc16</td>
-<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/193">merged</a></td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/193">merged</a>, <a href="https://github.com/macos-powerpc/powerpc-ports/pull/285">not yet</a></td>
 <td>N/A</td>
 <td>todo</td>
-<td>Needs expansion to everything pre-10.6 regardless of arch to fix rosetta and G5</td>
+<td>PowerPC Ports doensn't do this for 10.4 ppc and all 10.5 arches yet, but I currently do.</td>
 </tr>
 <tr>
 <td>gawk</td>
@@ -151,7 +188,7 @@
 <td>icu</td>
 <td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/200">merged</a></td>
 <td>??</td>
-<td>N/A</td>
+<td>todo</td>
 <td>Perhaps test leopard on macports official to see if it also applies.</td>
 </tr>
 <tr>
@@ -177,7 +214,7 @@
 </tr>
 <tr>
 <td>orc</td>
-<td>Intel fixes <a href="https://github.com/macos-powerpc/powerpc-ports/pull/213">merged</a>, PPC fixes not <a href="https://github.com/macos-powerpc/powerpc-ports/pull/264">yet</a></td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/213">merged</a>, <a href="https://github.com/macos-powerpc/powerpc-ports/pull/264">merged</a></td>
 <td>todo</td>
 <td>todo</td>
 <td>Tiger lacks certain expected headers and intel expects a 2011 x86_64 CPU that understands xgetbv. Perhaps detect this better in a different way? Power might be able to default to altivec perhaps on tiger in-source build system? And macports could use the xgetbv patch to stop blacklisting clang?</td>
@@ -254,10 +291,10 @@
 </tr>
 <tr>
 <td>libsdl2+pulseaudio</td>
-<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/227">merged</a></td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/227">merged</a>, <a href="https://github.com/macos-powerpc/powerpc-ports/pull/277">not yet</a></td>
 <td>??</td>
 <td>??</td>
-<td>Certainly not everything can ever be upstreamed as it is, but perhaps pulseaudio could become 'allowed' for mac os somewhere?</td>
+<td>Certainly not everything can ever be upstreamed as it is, but perhaps pulseaudio could become 'allowed' for mac os somewhere? Also, the pulseaudio buffer patch has not yet been upstreamed to PPCPorts.</td>
 </tr>
 <tr>
 <td>libdiscid</td>
@@ -324,21 +361,21 @@
 </tr>
 <tr>
 <td>ghostscript</td>
-<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/253">not yet</a></td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/253">merged</a></td>
 <td>??</td>
 <td>??</td>
 <td>MacPorts might want this for old gcc.</td>
 </tr>
 <tr>
-<td>py-cairo+x11</td>
-<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/266">N/A</a></td>
+<td>cairo</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/284">merged</a></td>
 <td>N/A</td>
-<td>This isn't a 'supported' variant in official macports (they force +x11+quartz), and perhaps it shouldn't be here either but we don't have a working xquartz yet. Not breaking other stuff to be pedantic so I allow it for now</td>
-<td></td>
+<td>todo</td>
+<td>Cairo has a <a href="https://cairo.freedesktop.org/news/cairo-1.16.0/">good history</a> of supporting 10.4, so it should be upstream-able. 10.4 privated APIs needed for quartz acceleration</td>
 </tr>
 <tr>
 <td>libfmt12</td>
-<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/269">not yet</a></td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/269">merged</a>, <a href="https://github.com/macos-powerpc/powerpc-ports/pull/294">merged</a></td>
 <td>N/A</td>
 <td>todo</td>
 <td>This needs to be upstreamed as it's a bug in the software when built on tiger</td>
@@ -352,7 +389,7 @@
 </tr>
 <tr>
 <td>minizip-ng</td>
-<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/271">not yet</a></td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/271">merged</a></td>
 <td>N/A</td>
 <td>todo</td>
 <td>Need to get this into upstream as they mandate O_NOFOLLOW</td>
@@ -363,6 +400,76 @@
 <td>N/A</td>
 <td>TODO</td>
 <td>Perhaps their build system should not use rpaths when detecting 10.4</td>
+</tr>
+<tr>
+<td>aom</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/290">merged</a></td>
+<td>??</td>
+<td>TODO</td>
+<td>The vendored components don't listen to their disable avx2 flag for the main software.</td>
+</tr>
+<tr>
+<td>highway</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/291">merged</a></td>
+<td>??</td>
+<td>N/A</td>
+<td>Complete... they provide build args to do what we need here.</td>
+</tr>
+<tr>
+<td>libjxl</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/292">merged</a></td>
+<td>??</td>
+<td>N/A</td>
+<td>Complete... they provide build args to do what we need here.</td>
+</tr>
+<tr>
+<td>kvazaar</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/293">not yet</a></td>
+<td>??</td>
+<td>??</td>
+<td>Need to upstream patch.</td>
+</tr>
+<tr>
+<td>openvpn2</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/294">not yet</a></td>
+<td>??</td>
+<td>N/A</td>
+<td>MacPorts might want the auto dep on tuntaposx</td>
+</tr>
+<tr>
+<td>mplayer</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/273">not yet</a></td>
+<td>??</td>
+<td>N/A</td>
+<td>Allows SDL, MacPorts might want this too?</td>
+</tr>
+<tr>
+<td>lzma</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/295">not yet</a></td>
+<td>todo</td>
+<td>??</td>
+<td>Might want to figure out a custom makefile or something for upstream?</td>
+</tr>
+<tr>
+<td>libvmaf</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/297">not yet</a></td>
+<td>??</td>
+<td>??</td>
+<td>Complete. provides build arg for avx (disable-asm = disable-avx AFAICT).</td>
+</tr>
+<tr>
+<td>ffmpeg</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/299">merged</a></td>
+<td>??</td>
+<td>??</td>
+<td>Intel asm works, testing ppc asm</td>
+</tr>
+<tr>
+<td>pulseaudio</td>
+<td>not yet</td>
+<td>not yet</td>
+<td>??</td>
+<td>My fixes do not account for the fixed configured sink latency default of 250ms on purpose, so the buffers are smaller and do not cause playback latency drift. Want to see what macports says about this.</td>
 </tr>
 </tbody>
 </table>
