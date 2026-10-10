@@ -2,13 +2,59 @@
 
 _The_ unofficial MacPorts For Tiger in 2026. The new home for Tiger development.
 
+## Downloads
+
+### v2.12.6.001 (10/9/2026)
+
+_MacPorts Base v2.12.6 + 10.4 compatibility fixes, configured for tigerports.com servers._
+
+* [TigerPorts-2.12.6.001.tar.bz2](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.6.001.tar.bz2) _bzip2 release tarball ([verification signature](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.6.001.tar.bz2.sig))_
+
+* [TigerPorts-2.12.6.001.tar.gz](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.6.001.tar.gz) _gzip release tarball ([verification signature](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.6.001.tar.gz.sig))_
+
+* [TigerPorts-2.12.6.001.chk.txt](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.6.001.chk.txt) _cryptographic checksum manifest to verify the integrity of TigerPorts downloads_
+
+### Changes In This Version
+
+* Based on release version v2.12.6.
+
+[Previous versions](http://tigerports.com/macports/distfiles/MacPorts)
+
+## Requirements
+
+TigerPorts requires Mac OS X 10.4.11 (retail and server releases are both supported) and Xcode v2.5. For your convenience I host an archive for these Apple downloads here on tigerports.com for direct download on legacy Macs. 
+
+* [MacOSXUpdCombo10.4.11Intel.dmg](http://tigerports.com/apple/MacOSXUpdCombo10.4.11Intel.dmg) (MD5: cc6e64bfe6b00910cdcf60ba2028840d)
+
+* [MacOSXUpdCombo10.4.11PPC.dmg](http://tigerports.com/apple/MacOSXUpdCombo10.4.11PPC.dmg) (MD5: 378b21fbd51471b0fa86129ead81541b)
+
+* [xcode25_8m2558_developerdvd.dmg](http://tigerports.com/apple/xcode25_8m2558_developerdvd.dmg) (MD5: 3bd6c24d8fbbdf9007e15861d173764d)
+
+## Usage
+
+It's just like MacPorts was when tiger was support. Right now, there are only source releases of base that you need to build yourself. See the page [Getting Started ](getting-started) for build instructions. Also documented there is how to replace the ancient ssh built-in to tiger with a modern secure one from ports, as well as setting up/configuring git over ssh that works for push/pull with github.
+
+## Important Places
+
+* [Getting Started](getting-started) - usage instructions, and how to setup/modernize your mac running tiger.
+
+* [Contributions Quick Start Quide](contributions-quick-start-guide) - for contributers, how to fix/work with tigerports and get your changes/fixes merged.
+
+* [Upstream Status Report](upstream-status-report) - status of maintained ports/change submissions, as well as working dependency chains.
+
+* [Writeup](writeup) - describes how I setup a complete replacement for macports.org.
+
+* [MacRumors Early Intel Macs Forum Thread](https://forums.macrumors.com/threads/tigerports-com-entire-macports-infrastructure-revived-for-mac-os-x-10-4.2485572)
+
+* [MacRumors PowerPC Macs Forum Thread](https://forums.macrumors.com/threads/tigerports-com-entire-macports-infrastructure-revived-for-mac-os-x-10-4.2485567/)
+
 ## Highlights
 
 * Officially support Tiger Intel and PowerPC. The Intel support is huge, as Intel Tiger had not been well tested since being dropped by MacPorts officially (and even then their were always more PowerPC users reporting and fixing issues). With TigerPorts having it's own custom port overlay based on [powerpc-ports](https://github.com/macos-powerpc/powerpc-ports) as upstream, I can rapidly change the ports tree with Tiger in mind (though I [also contribute back to PowerPC Ports](https://github.com/macos-powerpc/powerpc-ports/pulls?q=is%3Apr+author%3Aalex-free)). As I am one person, I've decided to focus on a [subset of end user facing ports](http://tigerports.com/upstream-status-report/) rather then being overwhelmed by the entire ports tree. This allows me to test, maintain, and officially support things that matter and show real results for Tiger. The scope of this will naturely increase in time, but documenting what we have working, what we want working, and how we have it working remains important and informs any potentional end users of the results already available for them to expierence.
 
 * [Binary archives](https://trac.macports.org/wiki/BinaryArchives). Tiger never had build bots (dedicated Macs automatically building compiled binaries for download on other Macs, in order to skip the need for building from source locally on an end user's machine) for 10.4 even back when it was officially supported by MacPorts. Leopard did have build bots at one point a few years ago, but no longer does as of 2026. I have two powerful workstations I use for development and for binary package creation, and my own tools currently to maintain hosting them for tigerports.com in [tigerports-infrastructure](https://github.com/alex-free/tigerports-infrastructure). If you would like to see what binary archives are available, you can [browse through them on this site](http://tigerports.com/macports/packages/). I also keep [statisitcs](http://tigerports.com/binary-archives-stats.txt) of how many have been made so far.
 
-* As [macports-base](github.com/macports/macports-base/) is the heart of the Macports project, [tigerports-base](https://github.com/alex-free/tigerports-base) is the heart of the TigerPorts project. It is important to stay relatively in sync with macports, and currently tigerports-base is based off of macports-base sources from 4/10/2026 (so v2.12.04 + some additional commits). This means tigerports-base is based off of newer sources then [ppcports-base](https://github.com/macos-powerpc/ppcports-base) as of 9/29/2026, though this is not a competion and I need to test upstream changes faster to ensure Tiger compatibility is maintained and to prepare for major changes. Tigerports-base also has implemented additional tiger related fixes into base.
+* As [macports-base](github.com/macports/macports-base/) is the heart of the Macports project, [tigerports-base](https://github.com/alex-free/macports-base/tree/tigerports-release-2.12) is the heart of the TigerPorts project.
 
 * Tigerports-base does not simply restore 10.4 compatibility to base, it also aims to be more capapble then the official macports-base was when it did support Tiger. TigerPorts-Base includes my new bootstrap system, building base against an updated cURL and OpenSSL which allows downloading distfiles from anywhere on the internet (Github, Gitlab, other https/tls mandated sites) that macports-base previously could not do before on legacy systems by default. This makes building from source and active development as seemless as a modern system, at as far as getting the source code on your machine for testing. TigerPorts-base also includes more in the bootstrap then just cURL and OpenSSL specifically for Tiger, to get it up to the standard/functionallity base typically expects and mandates for Leopard. This is done by including things such as the GNUMake from the Mac OS X 10.5.8 open source Apple releases, including updated GNUtar, bsdtar (from Libarchive), Gzip, and Bzip2.
 
@@ -37,82 +83,13 @@ PowerPC Ports is where Tiger support would find a [new home](https://forums.macr
 
 So much effort and work was put into keeping Tiger alive for MacPorts. PowerPC Ports was carrying the torch where they left off. But I knew more could be done. It could be made more effortless. A place where Tiger had tier 1, 1st class support for the first time in over a decade. I wanted to be the change I wanted to see. This is how TigerPorts came to be.
 
-## Get Involved
-
-* [Getting Started](getting-started) - usage instructions, and how to setup/modernize your mac running tiger.
-
-* [Contributions Quick Start Quide](contributions-quick-start-guide) - for contributers, how to fix/work with tigerports and get your changes/fixes merged.
-
-* [Upstream Status Report](upstream-status-report) - status of maintained ports/change submissions, as well as working dependency chains.
-
-* [MacRumors Early Intel Macs Forum Thread](https://forums.macrumors.com/threads/tigerports-com-entire-macports-infrastructure-revived-for-mac-os-x-10-4.2485572)
-
-* [MacRumors PowerPC Macs Forum Thread](https://forums.macrumors.com/threads/tigerports-com-entire-macports-infrastructure-revived-for-mac-os-x-10-4.2485567/)
-
-## Downloads
-
-### v2.12.04.004 (9/27/2026)
-
-* [TigerPorts-2.12.04.004.tar.bz2](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.004.tar.bz2) _bzip2 release tarball ([verification signature](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.004.tar.bz2.sig))_
-
-* [TigerPorts-2.12.04.004.tar.gz](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.004.tar.gz) _gzip release tarball ([verification signature](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.004.tar.gz.sig))_
-
-* [TigerPorts-2.12.04.004.chk.txt](http://tigerports.com/macports/distfiles/MacPorts/TigerPorts-2.12.04.004.chk.txt) _cryptographic checksum manifest to verify the integrity of TigerPorts downloads_
-
-
-### Changes In This Version
-
-* Updated base, archives, and ports to use new signify keys. This breaks selfupdate from lower versions of tigerports-base for this version, so you must use the tarball to get to this release (future versions are not affected).
-
-* Removed obsolete tiger system libcurl code in src/pextlib1.0/curl.c (we use our own curl). 
-
-* Removed obsolete tar code for tiger system tar (we use our own tar/libarchive now).
-
-* Bootstrap uses bzip2 v1.0.8 on tiger.
-
-* Bootstrap uses gzip v1.15 on Tiger.
-
-* Bootstrap uses gnutar v1.15.1 on tiger.
-
-* Bootstrap uses gnumake-119 (straight from open source apple for leopard: https://web.archive.org/web/20110707153724/https://opensource.apple.com/release/mac-os-x-1058/) as system make. This fixes ports that need an apple patch gnumake to build, and keeps us at parity with even sierra in capability (as Apple never moved off gnumake v3.81 even then because of not wanting GPL v3).
-
-* New build instructions/selfupdate functions implemented. Now do:
-
-./bootstrap_configure.sh && make && sudo make install
-
-To setup your $PATH and envars, you can now do:
-
-./upath.sh
-
-* bootstrap_configure.sh: now supports custom prefixes (pass --prefix=/whatever/you/want). 
-
-* bootstrap_configure.sh: now doesn't run everything as root blindly, and preserves privleges. It will prompt you with sudo automatically when/if neccesary depending on what the specified prefix is for base.
-
-* Restored gnumake 3.80 compatibility for base (it just makes sense to keep base itself working on 3.80, as moving to use bootstrap gnumake3.81 from leopard to build base itself adds alot of complexity).
-
-[Previous versions](http://tigerports.com/macports/distfiles/MacPorts)
-
-## Requirements
-
-TigerPorts requires Mac OS X 10.4.11 (retail and server releases are both supported) and Xcode v2.5. For your convenience I host an archive for these Apple downloads here on tigerports.com for direct download on legacy Macs. 
-
-* [MacOSXUpdCombo10.4.11Intel.dmg](http://tigerports.com/apple/MacOSXUpdCombo10.4.11Intel.dmg) (MD5: cc6e64bfe6b00910cdcf60ba2028840d)
-
-* [MacOSXUpdCombo10.4.11PPC.dmg](http://tigerports.com/apple/MacOSXUpdCombo10.4.11PPC.dmg) (MD5: 378b21fbd51471b0fa86129ead81541b)
-
-* [xcode25_8m2558_developerdvd.dmg](http://tigerports.com/apple/xcode25_8m2558_developerdvd.dmg) (MD5: 3bd6c24d8fbbdf9007e15861d173764d)
-
-## Usage
-
-It's just like MacPorts. Right now, there are only source releases of base that you need to build yourself. See the page [Getting Started ](getting-started) for build instructions. Also documented there is how to replace the ancient ssh built-in to tiger with a modern secure one from ports, as well as setting up/configuring git over ssh that works for push/pull with github.
-
 ## Source Code
 
 * [Tiger orientated ports tree](https://github.com/alex-free/tigerports-ports) focused on software that works on Tiger. This is a managed snapshot of my fork of powerpc-ports tigerports branch (which tracks upstream powerpc-ports, and changes are submitted to them as well when possible) merged with the MacPorts Ports tree, creating one unified ports tree for tiger.
 
-* [Tiger orientated base](https://github.com/alex-free/tigerports-base), configured in source to use tigerports.com. This tracks upstream macports-base as close as possible, includes tiger-specific fixes/functionally, and additional features supported by PPCPorts-base as well. In addition, TigerPorts-Base is TLSv1.2 capable with modern certs so that it can connect to modern distfile sites/mirrors.
+* [Tiger orientated base](https://github.com/alex-free/macports-base/tree/tigerports-release-2.12), configured in source to use tigerports.com. This tracks upstream macports-base as close as possible, includes tiger-specific fixes/functionally, and additional features supported by PPCPorts-base as well. In addition, TigerPorts-Base is TLSv1.2 capable with modern certs so that it can connect to modern distfile sites/mirrors.
 
-* [Tiger orientated infrastructure](https://github.com/alex-free/tigerports-infrastructure), allows hosting tigerports.com on a Debian VPS rather then a Mac like MacPorts has it. This includes numerous improvements to the sync scripts, adds binary package signing management, and includes a setup script to recreate my server.
+* [Tiger orientated macports-infrastructure](https://github.com/alex-free/macports-infrastructure/tree/tigerports), allows hosting tigerports.com on a Debian VPS rather then a Mac like MacPorts has it. This includes numerous improvements to the sync scripts, adds binary package signing management, and includes a setup script to recreate my server.
 
 ## Credits
 

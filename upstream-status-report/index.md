@@ -30,7 +30,8 @@ These are the big software goals to make tiger compatible (and make binaries ava
 | git | yes | yes | none. |
 | libsdl | yes | yes | none |
 | libsdl2 | yes | yes | this uses pulseaudio backend since 10.4 does not have the native mac os apis needed since SDL 2.0.3. |
-| mplayer | yes | WIP | all deps working, mplayer code itself has issues when building on intel (perhaps some powerpc defines are not actually powerpc-specific, but rather older osx specific here). |
+| mplayer | yes | WIP | TODO - same patch from mplayer-devel. |
+| mplayer-devel | yes | yes |
 | openssh | yes | yes | none |
 | openssl | yes | yes | none |
 | openvpn2 | yes | yes | [check this out](https://forums.macrumors.com/threads/guide-how-to-vpn-on-early-intel-10-4-and-newer.2488211/?post=34789475#post-34789475) |
@@ -38,7 +39,9 @@ These are the big software goals to make tiger compatible (and make binaries ava
 | aria2 | yes | yes | none |
 | python314 | yes | yes | none |
 | xorg | yes | yes | This is xorg-server-1.18 from late 2015. All newer versions require spawn.h, which tiger doesn't have. To do any newer version, one would need their own implementation spawn.h or to restore the code path used in spawn.h-less systems. |
-| yt-dlp | WIP | WIP | Atomic Parsley dep is broken, WIP |
+| yt-dlp | yes | yes |
+| wine | n/a | no | Lots and lots of stuff need to happen, mingw must get a fallback at the very least to a version pre-spawn.h |
+
 
 ## Ports
 
@@ -64,7 +67,7 @@ These are the big software goals to make tiger compatible (and make binaries ava
 | pango | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/222) | N/A | ?? | Might be another bash situation that can be redone |
 | libxkbcommon | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/224) | N/A | todo | This should be upstreamed to the software |
 | py-gobject3 | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/226) | N/A | ?? | Might be another bash situation that can be redone |
-| libsdl2+pulseaudio | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/227), [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/277) | ?? | ?? | Certainly not everything can ever be upstreamed as it is, but perhaps pulseaudio could become 'allowed' for mac os somewhere? Also, the pulseaudio buffer patch has not yet been upstreamed to PPCPorts. |
+| libsdl2+pulseaudio | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/227), [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/330) | ?? | ?? | Potentionally SDL should support our pulseaudio configuration, and also setup pulseaudio for low latency by default. |
 | libdiscid | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/228) | N/A | N/A | Complete. |
 | dbus | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/229) | N/A | todo | Need to figure out what is going wrong with this build system linking the wrong paths (most likely an rpath-less issue). |
 | mesa | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/239) | ?? | todo | The build system should be more accomadting to legacy intel cpus. |
@@ -89,4 +92,7 @@ These are the big software goals to make tiger compatible (and make binaries ava
 | lzma | [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/295) | todo | ?? | Might want to figure out a custom makefile or something for upstream? |
 | libvmaf | [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/297) | ?? | ?? | Complete. provides build arg for avx (disable-asm = disable-avx AFAICT). |
 | ffmpeg | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/299) | ?? | ?? | Intel asm works, testing ppc asm |
-| pulseaudio | not yet | not yet | ?? | My fixes do not account for the fixed configured sink latency default of 250ms on purpose, so the buffers are smaller and do not cause playback latency drift. Want to see what macports says about this. | 
+| pulseaudio | [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/302) | not yet | ?? | Fixes implicit function with proper includes. |
+| cpr | [merged](https://github.com/macos-powerpc/powerpc-ports/pull/325), [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/329) | N/A | N/A | Complete, fixed with new legacy-support signal.h fix. |
+| legacy-support | [not yet](https://github.com/macos-powerpc/powerpc-ports/pull/326) | [not yet](https://github.com/macports/macports-legacy-support/pull/135), [not yet](https://github.com/macports/macports-legacy-support/pull/136) | upstream IS macports | fixes signal.h to be c23 compliant, used by some ports here. Fixes IOKit include with newer gcc. |
+

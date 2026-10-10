@@ -85,7 +85,13 @@
 <td>mplayer</td>
 <td>yes</td>
 <td>WIP</td>
-<td>all deps working, mplayer code itself has issues when building on intel (perhaps some powerpc defines are not actually powerpc-specific, but rather older osx specific here).</td>
+<td>TODO - same patch from mplayer-devel.</td>
+</tr>
+<tr>
+<td>mplayer-devel</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
 </tr>
 <tr>
 <td>openssh</td>
@@ -131,9 +137,15 @@
 </tr>
 <tr>
 <td>yt-dlp</td>
-<td>WIP</td>
-<td>WIP</td>
-<td>Atomic Parsley dep is broken, WIP</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>wine</td>
+<td>n/a</td>
+<td>no</td>
+<td>Lots and lots of stuff need to happen, mingw must get a fallback at the very least to a version pre-spawn.h</td>
 </tr>
 </tbody>
 </table>
@@ -291,10 +303,10 @@
 </tr>
 <tr>
 <td>libsdl2+pulseaudio</td>
-<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/227">merged</a>, <a href="https://github.com/macos-powerpc/powerpc-ports/pull/277">not yet</a></td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/227">merged</a>, <a href="https://github.com/macos-powerpc/powerpc-ports/pull/330">not yet</a></td>
 <td>??</td>
 <td>??</td>
-<td>Certainly not everything can ever be upstreamed as it is, but perhaps pulseaudio could become 'allowed' for mac os somewhere? Also, the pulseaudio buffer patch has not yet been upstreamed to PPCPorts.</td>
+<td>Potentionally SDL should support our pulseaudio configuration, and also setup pulseaudio for low latency by default.</td>
 </tr>
 <tr>
 <td>libdiscid</td>
@@ -466,10 +478,24 @@
 </tr>
 <tr>
 <td>pulseaudio</td>
-<td>not yet</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/302">not yet</a></td>
 <td>not yet</td>
 <td>??</td>
-<td>My fixes do not account for the fixed configured sink latency default of 250ms on purpose, so the buffers are smaller and do not cause playback latency drift. Want to see what macports says about this.</td>
+<td>Fixes implicit function with proper includes.</td>
+</tr>
+<tr>
+<td>cpr</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/325">merged</a>, <a href="https://github.com/macos-powerpc/powerpc-ports/pull/329">not yet</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Complete, fixed with new legacy-support signal.h fix.</td>
+</tr>
+<tr>
+<td>legacy-support</td>
+<td><a href="https://github.com/macos-powerpc/powerpc-ports/pull/326">not yet</a></td>
+<td><a href="https://github.com/macports/macports-legacy-support/pull/135">not yet</a>, <a href="https://github.com/macports/macports-legacy-support/pull/136">not yet</a></td>
+<td>upstream IS macports</td>
+<td>fixes signal.h to be c23 compliant, used by some ports here. Fixes IOKit include with newer gcc.</td>
 </tr>
 </tbody>
 </table>
